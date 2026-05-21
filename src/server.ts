@@ -75,7 +75,7 @@ app.get('/api/users',async(req : Request,res : Response)=>{
         `)
         res.status(200).json({
             success: true,
-            message: "User retrived successfully",
+            message: "Users retrived successfully",
             data: result.rows
         });
     }catch(error:any){
@@ -114,6 +114,34 @@ app.get("/api/users/:id",async(req:Request,res:Response)=>{
         });
     }
 
+});
+
+app.put("/api/users/:id",async(req:Request,res:Response)=>{
+    const {id} = req.params;
+    const {name,password,is_active} = req.body;
+    try{
+        const result = await pool.query(`
+            UPDATE users SET name = $1, passward = $2, is_active = $3, updated_at = NOW() WHERE id = $4 RETURNING *
+        `,[name,password,is_active,id])
+        if(result.rows.length === 0){
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully",
+            data: result.rows[0]
+        });
+
+    }catch(error:any){
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        });
+    }
 })
 app.listen(port, () => {
   console.log(`App runing on Port ${port} Successfully!`);
