@@ -44,7 +44,7 @@ app.get('/', (req : Request, res : Response)=>{
     "author": "Sajid Rahman",
   })
 });
-app.post('/',async(req:Request,res:Response)=>{
+app.post('/api/users',async(req:Request,res:Response)=>{
     //console.log(req.body);
     try{
      const {name,email,password,role}=req.body;
@@ -64,6 +64,26 @@ app.post('/',async(req:Request,res:Response)=>{
             message: error.message,
             error: error
         })
+    }
+
+})
+
+app.get('/api/users',async(req : Request,res : Response)=>{
+    try{
+        const result = await pool.query(`
+            SELECT * FROM users
+        `)
+        res.status(200).json({
+            success: true,
+            message: "User retrived successfully",
+            data: result.rows
+        });
+    }catch(error:any){
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        });
     }
 
 })
