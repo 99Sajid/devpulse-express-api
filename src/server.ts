@@ -1,8 +1,9 @@
 import app from "./app";
 import config from "./config";
-import { initdb } from './db';
+import { dataFromdb } from './db';
 const main = () => {
-    initdb();
+    dataFromdb.initUserdb();
+    dataFromdb.initIssuedb();
     app.listen(config.port, () => {
   console.log(`App runing on Port ${config.port} Successfully!`);
 });
