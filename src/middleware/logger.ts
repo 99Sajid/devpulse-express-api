@@ -6,7 +6,11 @@ const logger = (req: Request, res:Response, next:NextFunction) => {
     const log= `Method: ${req.method}, URL: ${req.url}, Time: ${new Date().toISOString()}`;
     fs.appendFile("logs.txt", log + "\n", (err) => {
         if (err) {
-            console.error("Error writing to log file", err);
+           res.status(500).json({
+            success: false,
+            message: "Error writing log to file",
+            error: err
+           })   
         }
     });
     next();

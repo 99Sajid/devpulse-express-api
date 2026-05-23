@@ -20,3 +20,14 @@ Method: GET, URL: /api/users, Time: 2026-05-23T11:01:21.243Z
 Method: GET, URL: /api/users, Time: 2026-05-23T11:01:35.971Z
 Method: GET, URL: /api/users, Time: 2026-05-23T11:02:25.564Z
 Method: GET, URL: /api/users, Time: 2026-05-23T11:02:33.914Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:16:37.546Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:23:59.295Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:29:25.061Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:29:58.666Z
+Method: POST, URL: /api/users, Time: 2026-05-23T11:30:32.235Z
+Method: GET, URL: /api/signin, Time: 2026-05-23T11:31:17.994Z
+Method: GET, URL: /api/auth/signin, Time: 2026-05-23T11:31:29.081Z
+Method: POST, URL: /api/auth/signin, Time: 2026-05-23T11:33:03.911Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:34:13.295Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:35:24.476Z
+Method: GET, URL: /api/users, Time: 2026-05-23T11:36:11.945Z
