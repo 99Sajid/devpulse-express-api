@@ -4,5 +4,5 @@ export interface IUser {
     email: string;
     password: string;
     is_active?: boolean;
-    role: string;
+    role: "contributor" | "maintainer";
 }

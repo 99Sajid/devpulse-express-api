@@ -2,7 +2,10 @@ import type { NextFunction, Request, Response } from "express";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import {pool} from "../db";
-const auth = () =>{
+import type { Role } from "../types";
+
+
+const auth = (...roles:Role[]) =>{
     return async(req: Request, res: Response, next: NextFunction) => {
     try{
         // console.log("Authenticating user...");

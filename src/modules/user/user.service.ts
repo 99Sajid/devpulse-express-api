@@ -11,7 +11,7 @@ const creatUserintodb = async(payload:IUser)=>{
     const {name,email,password,role}=payload;
     // console.log(password);
     const result = await pool.query(`
-        INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *
+        INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, COALESCE($4, 'contributor')) RETURNING *
     `,[name,email,await hashPassword(password),role])
     delete result.rows[0].password;
     return result;
