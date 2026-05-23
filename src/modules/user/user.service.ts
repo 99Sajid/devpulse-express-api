@@ -21,7 +21,7 @@ const getAllUsersdb = async()=>{
     const result = await pool.query(`
             SELECT * FROM users
         `)
-    result.rows.forEach((user) => delete user.password);
+    // result.rows.forEach((user) => delete user.password);
     return result;
 }
 const getSingleUserdb = async(id:string)=>{

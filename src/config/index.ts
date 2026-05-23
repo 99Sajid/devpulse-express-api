@@ -7,6 +7,7 @@ const PORT = 8000;
 const config = {
     connectionString: process.env.CONNECTIONSTRING as string,
     port: PORT,
+    secret : process.env.SECRET as string,
 }
 
 
