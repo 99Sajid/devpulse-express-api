@@ -36,6 +36,12 @@ const auth = (...roles:Role[]) =>{
     }
     const user = userData.rows[0];
     // console.log(userData.rows[0]);
+    if (roles.length && !roles.includes(user.role)) {
+    return res.status(403).json({
+        success: false,
+        message: "Forbidden Access"
+    });
+}
 
     req.user = decoded;
     next();

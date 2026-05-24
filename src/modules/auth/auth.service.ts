@@ -3,7 +3,8 @@ import type { IAuth } from "./auth.interface"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "../../config";
-const authSignIndb = async (payload:IAuth)=>{
+import type { IUser } from "../user/user.interface";
+const authLogindb = async (payload:IAuth)=>{
     const {email, password} = payload;
     const result = await pool.query(`
         SELECT * FROM users WHERE email = $1
@@ -27,13 +28,32 @@ const authSignIndb = async (payload:IAuth)=>{
     role: user.role,
     is_active: user.is_active,
    }
-   const accessToken = await jwt.sign(jwtPayload, config.secret,{
+   const accessToken = await jwt.sign(jwtPayload, config.accessTokenSecret,{
     expiresIn: "1d",
    })
-   // console.log(config.secret);
+   // console.log(config.accessTokenSecret);
+   const RefreshToken = await jwt.sign(jwtPayload, config.refreshTokenSecret,{
+    expiresIn: "1d",
+   })
 
-    return {  accessToken };
+    return {  accessToken, RefreshToken };
+}
+
+const hashPassword = async (password: string) => {
+    const saltRounds = 10;
+    return await bcrypt.hash(password, saltRounds);
+};
+
+const authSignupintodb = async(payload:IUser)=>{
+    const {name,email,password,role}=payload;
+    // console.log(password);
+    const result = await pool.query(`
+        INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, COALESCE($4, 'contributor')) RETURNING *
+    `,[name,email,await hashPassword(password),role])
+    delete result.rows[0].password;
+    return result;
 }
 export const authService = {
-    authSignIndb,
+    authLogindb,
+    authSignupintodb
 }
