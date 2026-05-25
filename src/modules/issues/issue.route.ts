@@ -2,11 +2,13 @@ import { Router } from "express";
 import type { Request, Response } from "express";
 import { pool } from "../../db";
 import { issueController } from "./issue.controller";
+import auth from "../../middleware/auth";
+import { userRole } from "../../types";
 
 
 const router = Router();
 
-router.post("/", issueController.createIssue);
+router.post("/",auth(userRole.contributor,userRole.maintainer), issueController.createIssue);
 router.get("/", issueController.getAllIssues);
 router.get("/:id",issueController.getSingleIssue);
 router.put("/:id",issueController.updateIssue);

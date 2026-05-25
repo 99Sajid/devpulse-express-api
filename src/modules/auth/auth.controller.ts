@@ -1,8 +1,9 @@
 import type { Request, Response } from "express";
-import { authService } from "./auth.service";
+import {authService} from "./auth.service";
 
 const authLogin = async(req: Request, res:Response)=>{
     const {email, password} = req.body;
+    // console.log(req.body);
     try {
         const result = await authService.authLogindb({email, password});
         const {  RefreshToken } = result;
@@ -16,6 +17,24 @@ const authLogin = async(req: Request, res:Response)=>{
 
         res.status(201).json({
             message: "User sign in  successfully",
+            data: result,
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            message: "Error creating issue",
+            error: error
+        })
+    }
+}
+const authRefrshtoken = async(req:Request,res:Response)=>{
+    //console.log(req.body);
+    try {
+        const result = await authService.genarateRefreshtoken(req.cookies.RefreshToken);
+        
+
+        res.status(201).json({
+            message: "access token regenarated successfully ",
             data: result,
         })
         
@@ -46,5 +65,6 @@ const authSignUp = async(req:Request,res:Response)=>{
 }
 export const authController = {
     authLogin,
-    authSignUp
+    authSignUp,
+    authRefrshtoken,
 }

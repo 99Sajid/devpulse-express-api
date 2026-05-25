@@ -11,13 +11,14 @@ const auth = (...roles:Role[]) =>{
         // console.log("Authenticating user...");
     // console.log(req.headers.authorization);
     const token=req.headers.authorization;
+    console.log("Received token: ", token);
     if(!token){
         return res.status(401).json({
             success: false,
             message: "Unauthorized: No token provided",
         });
     }
-    const decoded= jwt.verify(token as string,config.secret as string) as JwtPayload;
+    const decoded= jwt.verify(token as string,config.accessTokenSecret as string) as JwtPayload;
     console.log("Decoded token: ", decoded);
     const userData= await pool.query(`
         SELECT * FROM users WHERE email = $1

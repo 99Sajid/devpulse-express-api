@@ -4,7 +4,8 @@ import { issueService } from "./issue.service";
 
 const createIssue = async(req: Request,res: Response)=>{
     try{
-        const result = await issueService.createIssuedb(req.body);
+        const reporter_id = req.user?.id;
+        const result = await issueService.createIssuedb(req.body,reporter_id);
         res.status(201).json({
             message: "Issue created successfully",
             data: result.rows[0],

@@ -1,9 +1,12 @@
+import type { Request, Response } from "express";
 import { pool } from "../../db";
 import type { IIssue } from "./issue.interface";
 
 
-const createIssuedb = async(payload:IIssue)=>{
-    const {title, description, type, reporter_id} = payload;
+const createIssuedb = async(payload:IIssue,reporter_id:number)=>{
+    // console.log(payload);
+    const {title, description, type} = payload;
+    
        const result = await pool.query(
         `
         INSERT INTO issues

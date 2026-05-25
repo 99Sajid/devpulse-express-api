@@ -1,7 +1,7 @@
 import { pool } from "../../db";
 import type { IAuth } from "./auth.interface"
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import config from "../../config";
 import type { IUser } from "../user/user.interface";
 const authLogindb = async (payload:IAuth)=>{
@@ -53,7 +53,37 @@ const authSignupintodb = async(payload:IUser)=>{
     delete result.rows[0].password;
     return result;
 }
+const genarateRefreshtoken = async (token:string)=>{
+    
+    if(!token){
+        throw new Error("Unauthorized: No token provided");
+    }
+    const decoded= jwt.verify(token as string,config.refreshTokenSecret as string) as JwtPayload;
+    console.log("Decoded token: ", decoded);
+    const userData= await pool.query(`
+        SELECT * FROM users WHERE email = $1
+    `,[decoded.email]);
+    if(userData.rowCount===0){
+        throw new Error("Unauthorized: Invalid token");
+    }
+    if(!userData.rows[0].is_active){
+        throw new Error("Forbidden: User is not active");
+    }
+    const user = userData.rows[0];
+    const jwtPayload ={
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    is_active: user.is_active,
+   }
+   const accessToken = await jwt.sign(jwtPayload, config.accessTokenSecret,{
+    expiresIn: "1d",
+   })
+   return { accessToken };
+}
 export const authService = {
     authLogindb,
-    authSignupintodb
+    authSignupintodb,
+    genarateRefreshtoken,
 }

@@ -3,12 +3,14 @@ import {userRoute } from './modules/user/user.route';
 import { issueRoute } from './modules/issues/issue.route';
 import { authRoute } from './modules/auth/auth.route';
 import logger from './middleware/logger';
+import cookieparser from "cookie-parser";
 
 const app : Application = express()
 app.use(express.json()) // for parsing application/json
 app.use(express.text()) // for parsing text/plain
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(express.raw()) // for parsing application/octet-stream
+app.use(cookieparser());
 
 app.use(logger);
 app.get('/', (req : Request, res : Response)=>{

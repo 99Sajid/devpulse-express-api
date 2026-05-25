@@ -3,7 +3,7 @@ export interface IIssue {
     title: string;
     description: string;
     type: string;
-    reporter_id?: string;
+    reporter_id?: number;
     created_at?: Date;
     updated_at?: Date;
 }
