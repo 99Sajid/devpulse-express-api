@@ -86,3 +86,8 @@ Method: POST, URL: /api/issues, Time: 2026-05-25T08:58:36.068Z
 Method: PUT, URL: /api/issues/8, Time: 2026-05-25T08:59:05.784Z
 Method: PUT, URL: /api/issues/8, Time: 2026-05-25T09:08:35.088Z
 Method: PUT, URL: /api/issues/8, Time: 2026-05-25T09:09:05.959Z
+Method: POST, URL: /api/auth/Login, Time: 2026-05-25T09:11:48.800Z
+Method: PUT, URL: /api/issues/7, Time: 2026-05-25T09:12:23.193Z
+Method: DELETE, URL: /api/issues/7, Time: 2026-05-25T09:18:40.165Z
+Method: POST, URL: /api/auth/Login, Time: 2026-05-25T09:19:06.671Z
+Method: DELETE, URL: /api/issues/7, Time: 2026-05-25T09:19:32.077Z
