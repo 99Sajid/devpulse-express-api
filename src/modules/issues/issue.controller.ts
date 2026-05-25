@@ -57,6 +57,23 @@ const getSingleIssue = async(req: Request,res: Response)=>{
 const updateIssue = async(req: Request,res: Response)=>{
     const {id} = req.params;
     try{
+        const existingIssue = await issueService.getSingleIssuedb(id as string);
+        if (existingIssue.rows.length === 0) {
+        return res.status(404).json({
+            message: "Issue not found"
+        });
+        }
+        const issue = existingIssue.rows[0];
+        const user = req.user!;
+            if (
+                user.role === "contributor" &&
+                user.id !== issue.reporter_id
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Contributors can only update their own issues"
+                });
+            }
         const result = await issueService.updateIssuedb(id as string, req.body);
         if(result.rows.length === 0){
             return res.status(404).json({

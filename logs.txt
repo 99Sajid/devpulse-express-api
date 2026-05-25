@@ -74,3 +74,15 @@ Method: POST, URL: /api/issues, Time: 2026-05-25T07:42:52.765Z
 Method: POST, URL: /api/issues, Time: 2026-05-25T07:43:36.717Z
 Method: POST, URL: /api/issues, Time: 2026-05-25T07:45:49.710Z
 Method: POST, URL: /api/issues, Time: 2026-05-25T07:46:26.037Z
+Method: POST, URL: /api/issues, Time: 2026-05-25T08:50:14.827Z
+Method: POST, URL: /api/issues, Time: 2026-05-25T08:51:17.057Z
+Method: POST, URL: /api/issues, Time: 2026-05-25T08:51:58.044Z
+Method: PUT, URL: /api/issues, Time: 2026-05-25T08:55:24.233Z
+Method: PUT, URL: /api/issues, Time: 2026-05-25T08:55:49.281Z
+Method: PUT, URL: /api/issues/7, Time: 2026-05-25T08:56:07.674Z
+Method: POST, URL: /api/auth/signup, Time: 2026-05-25T08:57:05.527Z
+Method: POST, URL: /api/auth/Login, Time: 2026-05-25T08:57:29.644Z
+Method: POST, URL: /api/issues, Time: 2026-05-25T08:58:36.068Z
+Method: PUT, URL: /api/issues/8, Time: 2026-05-25T08:59:05.784Z
+Method: PUT, URL: /api/issues/8, Time: 2026-05-25T09:08:35.088Z
+Method: PUT, URL: /api/issues/8, Time: 2026-05-25T09:09:05.959Z
