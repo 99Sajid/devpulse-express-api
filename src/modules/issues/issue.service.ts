@@ -19,12 +19,71 @@ const createIssuedb = async(payload:IIssue,reporter_id:number)=>{
         return result;
 
 }
-const getAllIssuesdb = async()=>{
-    const result = await pool.query(`
-            SELECT * FROM issues
-        `)
-    return result;
+const getAllIssuesFromDB = async (query: any) => {
+
+    let sql = `SELECT * FROM issues`;
+    const allowedTypes = ["bug", "feature_request"];
+    const allowedStatus = ["open", "in_progress", "resolved"];
+    const allowedSort = ["newest", "oldest"];
+    if (query.type && !allowedTypes.includes(query.type)) {
+    throw new Error("Invalid issue type");
 }
+    if (query.status && !allowedStatus.includes(query.status)) {
+    throw new Error("Invalid issue status");
+}
+    if (query.sort && !allowedSort.includes(query.sort)) {
+    throw new Error("Invalid sorting option");
+}
+
+    const conditions = [];
+    const values = [];
+
+    // FILTER TYPE
+    if (query.type) {
+        values.push(query.type);
+        conditions.push(`type = $${values.length}`);
+    }
+
+    // FILTER STATUS
+    if (query.status) {
+        values.push(query.status);
+        conditions.push(`status = $${values.length}`);
+    }
+
+    // ADD WHERE CONDITION
+    if (conditions.length > 0) {
+        sql += ` WHERE ` + conditions.join(" AND ");
+    }
+
+    // SORTING
+    if (query.sort === "oldest") {
+        sql += ` ORDER BY created_at ASC`;
+    } else {
+        sql += ` ORDER BY created_at DESC`;
+    }
+
+    const result = await pool.query(sql, values);
+
+    const reporterIds = result.rows.map(
+        issue => issue.reporter_id
+    );
+    const usersResult = await pool.query(
+        `SELECT id, name, role FROM users WHERE id = ANY($1)`,
+        [reporterIds]
+    );
+    const finalData = result.rows.map(issue => {
+
+        const reporter = usersResult.rows.find(
+            user => user.id === issue.reporter_id
+        );
+
+        return {
+            ...issue,
+            reporter
+        };
+    });
+    return finalData;
+};
 const getSingleIssuedb = async(id:string)=>{
     const result = await pool.query(`
             SELECT * FROM issues WHERE id = $1
@@ -54,7 +113,7 @@ const deleteIssuedb = async(id:string)=>{
 }
 export const issueService = {
     createIssuedb,
-    getAllIssuesdb,
+    getAllIssuesFromDB,
     getSingleIssuedb,
     updateIssuedb,
     deleteIssuedb,

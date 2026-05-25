@@ -91,3 +91,11 @@ Method: PUT, URL: /api/issues/7, Time: 2026-05-25T09:12:23.193Z
 Method: DELETE, URL: /api/issues/7, Time: 2026-05-25T09:18:40.165Z
 Method: POST, URL: /api/auth/Login, Time: 2026-05-25T09:19:06.671Z
 Method: DELETE, URL: /api/issues/7, Time: 2026-05-25T09:19:32.077Z
+Method: GET, URL: /api/issues?type=bug, Time: 2026-05-25T11:44:32.143Z
+Method: POST, URL: /api/issues, Time: 2026-05-25T11:46:56.818Z
+Method: POST, URL: /api/issues, Time: 2026-05-25T11:47:50.502Z
+Method: GET, URL: /api/issues?type=bug&status=open, Time: 2026-05-25T11:49:43.416Z
+Method: GET, URL: /api/issues?sort=oldest, Time: 2026-05-25T11:50:58.864Z
+Method: GET, URL: /api/issues?type=bug&status=open&sort=newest, Time: 2026-05-25T11:51:48.734Z
+Method: GET, URL: /api/issues, Time: 2026-05-25T12:05:07.520Z
+Method: GET, URL: /api/issues?status=open&sort=newest, Time: 2026-05-25T12:06:08.391Z

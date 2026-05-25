@@ -7,12 +7,14 @@ const createIssue = async(req: Request,res: Response)=>{
         const reporter_id = req.user?.id;
         const result = await issueService.createIssuedb(req.body,reporter_id);
         res.status(201).json({
+            success: true,
             message: "Issue created successfully",
             data: result.rows[0],
         })
         console.log(result.rows[0]);
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error creating issue",
             error: error
         })
@@ -22,13 +24,15 @@ const createIssue = async(req: Request,res: Response)=>{
 }
 const getAllIssues = async(req: Request,res: Response)=>{
     try{
-        const result = await issueService.getAllIssuesdb();
+        const result = await issueService.getAllIssuesFromDB(req.query);
         res.status(200).json({
+            success: true,
             message: "Issues retrieved successfully",
-            data: result.rows
+            data: result,
         })
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error retrieving issues",
             error: error
         })
@@ -40,15 +44,18 @@ const getSingleIssue = async(req: Request,res: Response)=>{
         const result = await issueService.getSingleIssuedb(id as string);
         if(result.rows.length === 0){
             return res.status(404).json({
+                success: false,
                 message: "Issue not found"
             });
         }
         res.status(200).json({
+            success: true,
             message: "Issue retrieved successfully",
             data: result.rows[0]
         });
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error retrieving issue",
             error: error
         })
@@ -60,7 +67,9 @@ const updateIssue = async(req: Request,res: Response)=>{
         const existingIssue = await issueService.getSingleIssuedb(id as string);
         if (existingIssue.rows.length === 0) {
         return res.status(404).json({
-            message: "Issue not found"
+            success: false,
+            message: "Issue not found",
+
         });
         }
         const issue = existingIssue.rows[0];
@@ -77,15 +86,18 @@ const updateIssue = async(req: Request,res: Response)=>{
         const result = await issueService.updateIssuedb(id as string, req.body);
         if(result.rows.length === 0){
             return res.status(404).json({
+                success: false,
                 message: "Issue not found"
             });
         }
         res.status(200).json({
+            success: true,
             message: "Issue updated successfully",
             data: result.rows[0]
         });
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error updating issue",
             error: error
         })
@@ -97,15 +109,18 @@ const deleteIssue = async(req: Request,res: Response)=>{
         const result = await issueService.deleteIssuedb(id as string);
         if(result.rows.length === 0){
             return res.status(404).json({
+                success: false,
                 message: "Issue not found"
             });
         }
         res.status(200).json({
+            success: true,
             message: "Issue deleted successfully",
             data: result.rows[0]
         });
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error deleting issue",
             error: error
         })

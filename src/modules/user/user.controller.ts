@@ -7,12 +7,14 @@ const creatUser = async(req:Request,res:Response)=>{
      const result= await userService.creatUserintodb(req.body);
 
     res.status(201).json({
+        success: true,
         message: "User created successfully",
         data: result.rows[0],
     })
     }catch(error:any){
         console.error("Error occurred while inserting data:", error);
         res.status(500).json({
+            success: false,
             message: error.message,
             error: error
         })
@@ -24,7 +26,7 @@ const getAllUsers = async(req : Request,res : Response)=>{
         const result = await userService.getAllUsersdb();
         res.status(200).json({
             success: true,
-            message: "Users retrived successfully",
+            message: "Users retrieved successfully",
             data: result.rows
         });
     }catch(error:any){

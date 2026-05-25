@@ -16,12 +16,14 @@ const authLogin = async(req: Request, res:Response)=>{
         });
 
         res.status(201).json({
+            success: true,
             message: "User sign in  successfully",
             data: result,
         })
         
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error creating issue",
             error: error
         })
@@ -34,12 +36,14 @@ const authRefrshtoken = async(req:Request,res:Response)=>{
         
 
         res.status(201).json({
+            success: true,
             message: "access token regenarated successfully ",
             data: result,
         })
         
     } catch (error) {
         res.status(500).json({
+            success: false,
             message: "Error creating issue",
             error: error
         })
@@ -51,12 +55,14 @@ const authSignUp = async(req:Request,res:Response)=>{
      const result= await authService.authSignupintodb(req.body);
 
     res.status(201).json({
+        success: true,
         message: "signup successfully",
         data: result.rows[0],
     })
     }catch(error:any){
         console.error("Error occurred while inserting data:", error);
         res.status(500).json({
+            success: false,
             message: error.message,
             error: error
         })
